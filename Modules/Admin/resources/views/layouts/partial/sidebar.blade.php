@@ -46,7 +46,7 @@
 
 
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="{{ route('groups.list') }}" class="menu-link">
                     <div class="text-truncate" data-i18n="Account">Group List</div>
                   </a>
                 </li>

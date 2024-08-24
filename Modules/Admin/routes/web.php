@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Modules\Admin\Http\Controllers\AdminController;
 use Modules\Admin\Http\Controllers\UserController;
 use Modules\Admin\Http\Controllers\SitesController;
+use Modules\Admin\Http\Controllers\GroupsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +42,14 @@ Route::group(['prefix' => 'admin','name' => 'admin.', 'middleware' => ['auth']],
     Route::patch('sites/update/{id}', [SitesController::class, 'update'])->name('sites.update');
     Route::get('sites/ajaxgetsites', [SitesController::class, 'ajaxgetsites'])->name('sites.ajaxgetsites');
 
+    //Group Routes
+    Route::get('groups/list', [GroupsController::class, 'index'])->name('groups.list');
+    Route::get('groups/create', [GroupsController::class, 'create'])->name('groups.create');
+    Route::post('groups/store', [GroupsController::class, 'store'])->name('groups.store');
+    Route::get('groups/adduser/search', [GroupsController::class, 'find'])->name('groups.searchuser');
+    Route::get('groups/ajaxgetgroups', [GroupsController::class, 'ajaxgetgroups'])->name('groups.ajaxgetgroups');
+    Route::get('groups/edit/{id}', [GroupsController::class, 'edit'])->name('groups.edit');
+    Route::patch('groups/update/{id}', [GroupsController::class, 'update'])->name('groups.update');
 
 
 

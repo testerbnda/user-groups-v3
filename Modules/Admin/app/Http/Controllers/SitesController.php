@@ -136,7 +136,6 @@ class SitesController extends Controller
 
       } catch (\Illuminate\Database\QueryException $ex) {
         \Log::error($request->getHttpHost().": Update site request failed with id=".$id.", Error=".$ex->getMessage());
-      // return redirect()->back()->withInput();
       }
     }
 
