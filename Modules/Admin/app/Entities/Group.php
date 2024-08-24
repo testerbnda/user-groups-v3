@@ -2,10 +2,10 @@
 
 namespace Modules\Admin\Entities;
 use App\Models\User;
+use Modules\Admin\Entities\Sites;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class Group extends Model
 {
     use HasFactory;
@@ -38,7 +38,7 @@ class Group extends Model
      */
     public function site()
     {
-        return $this->belongsTo(Site::class, 'site_id');
+        return $this->belongsTo(Sites::class, 'site_id');
     }
 
     /**

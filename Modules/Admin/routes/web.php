@@ -50,8 +50,9 @@ Route::group(['prefix' => 'admin','name' => 'admin.', 'middleware' => ['auth']],
     Route::get('groups/ajaxgetgroups', [GroupsController::class, 'ajaxgetgroups'])->name('groups.ajaxgetgroups');
     Route::get('groups/edit/{id}', [GroupsController::class, 'edit'])->name('groups.edit');
     Route::patch('groups/update/{id}', [GroupsController::class, 'update'])->name('groups.update');
-
-
+    
+    
+    Route::get('searchuser', [GroupsController::class, 'find'])->name('searchuser');
 
     // Cache Clear
     Route::get('/clear-cache',function(){

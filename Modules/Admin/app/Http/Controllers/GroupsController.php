@@ -79,11 +79,9 @@ class GroupsController extends Controller
      */
     public function edit($id)
     {
-        $id     =   encrypt_decrypt('decrypt',$id);
+        $id = encrypt_decrypt('decrypt',$id);
         $group = $this->groupService->firstornew($id); 
-
         $name = $group->name;
-
         return view('admin::groups.edit',compact('group','name'));
     }
 
@@ -93,9 +91,11 @@ class GroupsController extends Controller
     public function update(GroupUpdateService $request, $id)
     {
         try{
-            $data = $request->only('name','status');
-            $sites = $this->groupService->firstornew($id);
-            $result = $this->groupService->update($sites,$data);
+            $data = $request->only('name','status', 'user_ids');
+            $group = $this->groupService->firstornew($id);
+            $user_ids = explode(",", $data['user_ids']);
+            $data['user_ids'] = $user_ids;
+            $result = $this->groupService->update($group,$data);
             if($result){
                 $notification = array(
                 'message' => 'You have successfully updated site!',

@@ -3,6 +3,7 @@ namespace Modules\Admin\Repositories\Implementations;
 use Modules\Core\Helpers\Logger;
 use Modules\Admin\Repositories\Interfaces\GroupInterface;
 use Modules\Admin\Entities\Group;
+use Modules\Admin\Entities\Group_Users;
 use App\Models\User;
 use DB;
 
@@ -41,23 +42,36 @@ class GroupRepository implements GroupInterface {
     }
 
     public function ajaxgetlist() {
-        if (request()->ajax()) { 
+        if (request()->ajax()) {
+            
+            // Logger::info('Group Users', ); 
             $data = Group::select('groups.*') 
                 ->orderBy('groups.status', 'desc')
                 ->orderBy('groups.created_at', 'desc')->get();
+
+                // $groupIds = $data->pluck('id'); // Get all group IDs
+                $groupIds = $data->pluck('id');
+        $groupUsers = DB::table('group_users')
+            ->whereIn('group_id', $groupIds)
+            ->get()
+            ->groupBy('group_id');
+                    // Logger::info($groupUsers);
             return datatables()->of($data)
                 ->setRowClass(function ($request) {
                     return $request->status == 1 ? 'nk-tb-item' : 'nk-tb-item font-italic text-muted';
                 })
                 ->editColumn('created_at', function ($request) {
                     return $request->created_at->format('d/m/Y H:i:s');
-                    // return [
-                    //     'display'   => $request->created_at->format('d/m/Y'),
-                    //     'timestamp' => $request->created_at,
-                    // ];
                 })
                 ->editColumn('name', function ($request) {
                    return $request->name;
+                })
+                ->addColumn('users', function ($request) use ($groupUsers) {
+                    $users = isset($groupUsers[$request->id]) ? $groupUsers[$request->id] : [];
+                    $userIds = $users->pluck('user_id');
+                    return $link =  '<div class="demo-inline-spacing">
+                    <a href="' . url('#', encrypt_decrypt('encrypt',$request->id)) . '" >' . $userIds -> count() . ' </a>
+                </div>';
                 })
             
                 ->editColumn('status', function ($request) {
@@ -67,7 +81,6 @@ class GroupRepository implements GroupInterface {
                        return '<label class="custom-control-label" for="customSwitch' . $request->id . '">Inactive</label>';
                    }
                 })
-                 
                 // Create group edit code
                 ->addColumn('action', function ($data) {
                     // return '<a class="btn btn-success btn-sm" href="'.url('admin/sites/edit',$data->id).'">Edit</a>';
@@ -77,15 +90,14 @@ class GroupRepository implements GroupInterface {
                     </button></a>
                 </div>';
                 })
-                ->rawColumns(['created_at', 'name', 'status' ,'action'])
+                ->rawColumns(['created_at', 'name', 'users', 'status' ,'action' ])
                 ->make(true);
         }
     }
 
     public function firstornew($id) {
         if (!empty($id)) {
-
-            return Group::where('id', $id)->first();
+            return Group::with('users')->where('id', $id)->first();
         }
         return new Group();
     }
@@ -93,13 +105,14 @@ class GroupRepository implements GroupInterface {
     public function update(Group $group, array $data) {
         return DB::transaction(function () use ($group, $data) {
             try {
+                // Logger::info($data);
                 $updated_group = $group -> update($data);
                 if($updated_group) {
                     Logger::info('Group updated successfully.', ['group_id' => $group->id]);
                 }
-                // if (!empty($data['user_ids'])) {
-                //     $group->users()->sync($data['user_ids']);
-                // }
+                if (!empty($data['user_ids'])) {
+                    $group->users()->sync($data['user_ids']);
+                }
 
                 return redirect()->route('groups.list')->with('success', 'Group Updated successfully.');
             } catch (\Exception $e) {

@@ -20,6 +20,7 @@
             <tr class="nk-tb-item nk-tb-head">
                                             <th class="nk-tb-col"><span class="sub-text">Created</span></th>
                                             <th class="nk-tb-col"><span class="sub-text">Name</span></th> 
+                                            <th class="nk-tb-col"><span class="sub-text">Users</span></th>
                                             <th class="nk-tb-col"><span class="sub-text">Status</span></th>
                                             <th class="nk-tb-col"><span class="sub-text">Action</span></th>
                                         </tr>

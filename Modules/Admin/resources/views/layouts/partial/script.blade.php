@@ -164,12 +164,20 @@
               sClass: 'nk-tb-col'
           },
           {
+              data: 'users',
+              name: 'users',
+              orderable: true,
+              serachable: true,
+              sClass: 'text-center nk-tb-col nk-tb-col-users'
+          },
+          {
               data: 'status',
               name: 'status',
               orderable: false,
               serachable: false,
               sClass: 'text-center nk-tb-col'
           },
+          
           {
               data: 'action',
               name: 'action',
