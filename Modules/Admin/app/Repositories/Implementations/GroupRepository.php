@@ -153,15 +153,10 @@ class GroupRepository implements GroupInterface
         }
     }
 
-    public function ajaxgetusers($id)
-    {   
-        
+    public function ajaxgetusers($id) {   
         if (request()->ajax()) {
-            
             $group = Group::find($id);
             $data = $group -> users();
-
-            Logger::info(json_encode(["groupusers" => $data]));
             return datatables()->eloquent($data)
                 ->setRowClass(function ($request) {
                     return $request->status == 1 ? 'nk-tb-item' : 'nk-tb-item font-italic';
