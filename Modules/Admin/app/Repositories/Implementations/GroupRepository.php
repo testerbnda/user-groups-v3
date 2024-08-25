@@ -8,8 +8,6 @@ use Modules\Admin\Entities\Group;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-
-
 class GroupRepository implements GroupInterface
 {
     public function createGroup($data) {

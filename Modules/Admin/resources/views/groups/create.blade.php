@@ -100,7 +100,7 @@
         });
 
         function fetchUsers(query) {
-            fetch(`adduser/search?query=${query}`)
+            fetch(`/admin/searchuser?query=${query}`)
                 .then(response => response.json())
                 .then(data => {
                     userSuggestions.innerHTML = '';

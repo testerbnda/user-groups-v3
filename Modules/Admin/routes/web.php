@@ -46,13 +46,12 @@ Route::group(['prefix' => 'admin','name' => 'admin.', 'middleware' => ['auth']],
     Route::get('groups/list', [GroupsController::class, 'index'])->name('groups.list');
     Route::get('groups/create', [GroupsController::class, 'create'])->name('groups.create');
     Route::post('groups/store', [GroupsController::class, 'store'])->name('groups.store');
-    Route::get('groups/adduser/search', [GroupsController::class, 'find'])->name('groups.searchuser');
     Route::get('groups/ajaxgetgroups', [GroupsController::class, 'ajaxgetgroups'])->name('groups.ajaxgetgroups');
     Route::get('groups/edit/{id}', [GroupsController::class, 'edit'])->name('groups.edit');
     Route::patch('groups/update/{id}', [GroupsController::class, 'update'])->name('groups.update');
     Route::delete('groups/delete/{id}', [GroupsController::class, 'destroy'])->name('groups.delete');
     
-    
+    // Route to search users
     Route::get('searchuser', [GroupsController::class, 'find'])->name('searchuser');
 
     // Cache Clear
