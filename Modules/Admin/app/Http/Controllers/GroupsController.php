@@ -63,7 +63,7 @@ class GroupsController extends Controller
      * Show the specified resource.
      */
     public function show($id) {
-        return view('admin::show');
+        return view('admin::groups.show', ['id' => encrypt_decrypt('decrypt', $id)]);
     }
     /**
      * Show the form for editing the specified resource.
@@ -121,5 +121,10 @@ class GroupsController extends Controller
 
     public function ajaxgetgroups() {
         return $this->groupService->ajaxgetlist();
+    }
+
+    public function ajaxgetusers($id)
+    { 
+        return $this->groupService->ajaxgetusers($id); 
     }
 }

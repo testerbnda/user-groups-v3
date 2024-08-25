@@ -9,4 +9,5 @@ interface GroupInterface {
     public function update(Group $group, array $data);
     public function findFirst(string $id);
     public function deleteGroup(string $id);
+    public function ajaxgetusers(string $id);
 }

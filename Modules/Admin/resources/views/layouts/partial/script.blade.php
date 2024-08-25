@@ -38,7 +38,7 @@
   <!-- transfer this code from datatables.js to script.blade.php for modification -->
   <script type="text/javascript">
       var domainUrl = window.location.origin;
-
+        var groupId = "{{ $id ?? '' }}"; 
       var tblcol = [
           //   { 'name': 'created_at.timestamp', 'data': { '_': 'created_at.display', 'sort': 'created_at' }, sClass: 'text-center nk-tb-col' },
           {
@@ -161,6 +161,8 @@
           {
               data: 'name',
               name: 'name',
+              orderable: true,
+              serachable: true,
               sClass: 'nk-tb-col'
           },
           {
@@ -206,4 +208,58 @@
               [0, "desc"]
           ]
       })
+
+        var tblcol4 = [
+          //   { 'name': 'created_at.timestamp', 'data': { '_': 'created_at.display', 'sort': 'created_at' }, sClass: 'text-center nk-tb-col' },
+          {
+              data: 'created_at',
+              name: 'users.created_at',
+              sClass: 'nk-tb-col'
+          },
+          {
+              data: 'name',
+              name: 'users.name',
+              searchable: true,
+              sClass: 'nk-tb-col'
+          },
+          {
+              data: 'email',
+              name: 'users.email',
+              searchable: true,
+              orderable: false,
+          },
+          {
+              data: 'mobile_no',
+              name: 'users.mobile_no',
+              searchable: true,
+              orderable: false,
+              sClass: 'nk-tb-col'
+
+          },
+          {
+              data: 'status',
+              name: 'users.status',
+              serachable: false,
+              orderable: false,
+              sClass: 'text-center nk-tb-col'
+          },
+      ];
+
+      NioApp.DataTable("#groupusersdataTable", {
+          processing: true,
+          serverSide: true,
+          dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+          ajax: domainUrl + "/admin/groups/" + groupId + "/ajaxgetusers",
+          language: {
+              paginate: {
+                  next: '<i class="bx bx-chevron-right bx-18px"></i>',
+                  previous: '<i class="bx bx-chevron-left bx-18px"></i>'
+              }
+          },
+          columns: tblcol4,
+          "order": [
+              [0, "desc"]
+          ]
+      })
+      
   </script>

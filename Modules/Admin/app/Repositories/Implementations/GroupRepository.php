@@ -71,7 +71,7 @@ class GroupRepository implements GroupInterface
                     $users = isset($groupUsers[$request->id]) ? $groupUsers[$request->id] : [];
                     $userIds = $users->pluck('user_id');
                     return $link =  '<div class="demo-inline-spacing">
-                    <a href="' . url('#', encrypt_decrypt('encrypt', $request->id)) . '" >' . $userIds->count() . ' </a>
+                    <a href="' . route('groups.users.list', ['id' => encrypt_decrypt('encrypt', $request->id)]) . '" >' . $userIds->count() . ' </a>
                 </div>';
                 })
 
@@ -150,6 +150,46 @@ class GroupRepository implements GroupInterface
         } catch (\Exception $e) {
             DB::rollback();
             return redirect() -> back()->with('error', 'Failed to delete the group. Please try again.');
+        }
+    }
+
+    public function ajaxgetusers($id)
+    {   
+        
+        if (request()->ajax()) {
+            
+            $group = Group::find($id);
+            $data = $group -> users();
+
+            Logger::info(json_encode(["groupusers" => $data]));
+            return datatables()->eloquent($data)
+                ->setRowClass(function ($request) {
+                    return $request->status == 1 ? 'nk-tb-item' : 'nk-tb-item font-italic';
+                })
+                ->editColumn('created_at', function ($request) {
+                    return $request->created_at->format('d/m/Y H:i:s');
+                }) 
+
+                ->editColumn('name', function ($request) {
+                     
+                    return '<div class="user-card"><div class="user-info"><span class="tb-lead">' . $request->name . '<span class="dot dot-success d-md-none ml-1"></span></span></div></div>';
+                         
+                })
+                
+                ->editColumn('mobile_no', function ($request) {
+                    if(isset($request->mobile_no)){
+                        return  '<span> +' . $request->country_code . '&nbsp;' . $request->mobile_no . '</span>';
+                    } else{ return '<span>-</span>'; }
+                })
+                ->editColumn('status', function ($request) {
+                    if ($request->status == 1) {
+                         return '<label class="custom-control-label" for="customSwitch' . $request->id . '">Active</label>';
+                    } else {
+                        return '<label class="custom-control-label" for="customSwitch' . $request->id . '">Inactive</label>';
+                    }
+                })
+                ->rawColumns(['created_at', 'name', 'mobile_no','status'])
+                ->make(true);
         }
     }
 }

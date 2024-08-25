@@ -51,6 +51,9 @@ Route::group(['prefix' => 'admin','name' => 'admin.', 'middleware' => ['auth']],
     Route::patch('groups/update/{id}', [GroupsController::class, 'update'])->name('groups.update');
     Route::delete('groups/delete/{id}', [GroupsController::class, 'destroy'])->name('groups.delete');
     
+    // Group Users
+    Route::get('groups/{id}/users', [GroupsController::class, 'show'])->name('groups.users.list');
+    Route::get('groups/{id}/ajaxgetusers', [GroupsController::class, 'ajaxgetusers']) -> name('groups.ajaxgetusers');
     // Route to search users
     Route::get('searchuser', [GroupsController::class, 'find'])->name('searchuser');
 
