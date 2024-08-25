@@ -3,12 +3,9 @@
 namespace Modules\Admin\Http\Controllers;
 use Modules\Admin\Services\GroupService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\Core\Helpers\Logger;
 use Modules\Admin\Http\Requests\GroupUpdateService;
-
 
 
 class GroupsController extends Controller
@@ -16,32 +13,28 @@ class GroupsController extends Controller
     private $groupService;
 
     // Constructor
-    public function __construct(GroupService $groupService)
-    {
+    public function __construct(GroupService $groupService) {
         $this->groupService = $groupService;  
     }
 
     /**
      * Display a listing of the resource.   
      */
-    public function index()
-    {
+    public function index() {
         return view('admin::groups.index');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         return view('admin::groups.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
         try {
             $data = $request->validate([
@@ -69,16 +62,13 @@ class GroupsController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
-    {
+    public function show($id) {
         return view('admin::show');
     }
-
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $id = encrypt_decrypt('decrypt',$id);
         $group = $this->groupService->firstornew($id); 
         $name = $group->name;
@@ -88,8 +78,7 @@ class GroupsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(GroupUpdateService $request, $id)
-    {
+    public function update(GroupUpdateService $request, $id) {
         try{
             $data = $request->only('name','status', 'user_ids');
             $group = $this->groupService->firstornew($id);
@@ -106,26 +95,31 @@ class GroupsController extends Controller
                 return redirect()->back()->withInput();
             }
 
-      } catch (\Illuminate\Database\QueryException $ex) {
-        \Log::error($request->getHttpHost().": Update site request failed with id=".$id.", Error=".$ex->getMessage());
+      } catch (\Exception $ex) {
+        Logger::error($request->getHttpHost().": Update site request failed with id=".$id.", Error=".$ex->getMessage());
       }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        try {
+            $id = encrypt_decrypt('decrypt',$id);
+            $group = $this->groupService->findFirst($id);
+            return $this->groupService->deleteGroup($id);
+        } catch(\Exception $ex) {
+            Logger::error("Error=".$ex->getMessage());
+        }
     }
+
     public function find(Request $request) {
         $query = $request->input('query');
         if(strlen($query) < 1) return response() -> json(['users' => []]);
         return $this -> groupService -> searchUser($query);
     }
 
-    public function ajaxgetgroups()
-    {
+    public function ajaxgetgroups() {
         return $this->groupService->ajaxgetlist();
     }
 }

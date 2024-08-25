@@ -35,8 +35,7 @@ class GroupService {
         }
     }
 
-    public function ajaxgetlist()
-    {
+    public function ajaxgetlist() {
         try {
             return $this->groupRepo->ajaxgetlist();
         } catch (Exception $ex) {
@@ -45,8 +44,7 @@ class GroupService {
         }
     }
 
-    public function firstornew($id = null)
-    {
+    public function firstornew($id = null) {
         try {
             return $this->groupRepo->firstornew($id);
         } catch (Exception $ex) {
@@ -55,8 +53,16 @@ class GroupService {
         }
     }
 
-    public function update($groups, $data)
-    {
+    public function findFirst($id = null) {
+        try {
+            return $this->groupRepo->findFirst($id);
+        } catch (Exception $ex) {
+            Logger::error($ex);
+            return $ex;
+        }
+    }
+
+    public function update($groups, $data) {
         try {
             return $this->groupRepo->update($groups, $data);
         } catch (Exception $ex) {
@@ -65,5 +71,13 @@ class GroupService {
         }
     }
 
+    public function deleteGroup($id) {
+        try {
+            return $this -> groupRepo -> deleteGroup($id);
+        } catch(Exception $ex) {
+            Logger::error($ex);
+            return $ex;
+        }
+    }
 }
 

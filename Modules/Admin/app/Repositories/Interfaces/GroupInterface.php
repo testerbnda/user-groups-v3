@@ -7,4 +7,6 @@ interface GroupInterface {
     public function ajaxgetlist();
     public function firstornew($id);
     public function update(Group $group, array $data);
+    public function findFirst(string $id);
+    public function deleteGroup(string $id);
 }

@@ -185,6 +185,7 @@
               serachable: false,
               sClass: 'text-center nk-tb-col nk-tb-col-tools'
           },
+          
       ];
 
 
