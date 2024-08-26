@@ -32,7 +32,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class); 
         $this->app->bind("Modules\Core\Repositories\Interfaces\LogViewerInterface", "Modules\Core\Repositories\Implementations\LogViewerRepository");
-   
+        
     }
 
     /**
