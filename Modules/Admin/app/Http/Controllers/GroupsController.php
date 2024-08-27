@@ -83,11 +83,14 @@ class GroupsController extends Controller
             $data = $request->only('name','status', 'user_ids');
             $group = $this->groupService->firstornew($id);
             $user_ids = explode(",", $data['user_ids']);
+            if($data["user_ids"] == null) {
+                $user_ids = [];
+            }
             $data['user_ids'] = $user_ids;
             $result = $this->groupService->update($group,$data);
             if($result){
                 $notification = array(
-                'message' => 'You have successfully updated site!',
+                'message' => 'You have successfully updated group!',
                 'alert-type' => 'success'
                 );
                 return redirect()->route('groups.list')->with($notification);
@@ -123,8 +126,7 @@ class GroupsController extends Controller
         return $this->groupService->ajaxgetlist();
     }
 
-    public function ajaxgetusers($id)
-    { 
+    public function ajaxgetusers($id) { 
         return $this->groupService->ajaxgetusers($id); 
     }
 }

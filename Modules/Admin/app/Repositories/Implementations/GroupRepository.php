@@ -68,8 +68,10 @@ class GroupRepository implements GroupInterface
                     return $request->name;
                 })
                 ->addColumn('users', function ($request) use ($groupUsers) {
-                    $users = isset($groupUsers[$request->id]) ? $groupUsers[$request->id] : [];
+                    $users = isset($groupUsers[$request->id]) ? $groupUsers[$request->id] : collect([]);
+                    
                     $userIds = $users->pluck('user_id');
+                    Logger::info(json_encode(["User Ids" => $userIds]));
                     return $link =  '<div class="demo-inline-spacing">
                     <a href="' . route('groups.users.list', ['id' => encrypt_decrypt('encrypt', $request->id)]) . '" >' . $userIds->count() . ' </a>
                 </div>';
@@ -129,6 +131,8 @@ class GroupRepository implements GroupInterface
                 }
                 if (!empty($data['user_ids'])) {
                     $group->users()->sync($data['user_ids']);
+                } else {
+                    $group->users()->sync([]);
                 }
 
                 return redirect()->route('groups.list')->with('success', 'Group Updated successfully.');

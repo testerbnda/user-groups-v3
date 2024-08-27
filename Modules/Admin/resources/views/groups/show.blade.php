@@ -12,7 +12,7 @@
  
         <div class="card">
 
-  <h5 class="card-header pb-0 text-md-start text-center">Group Management</h5>
+  <h5 class="card-header pb-0 text-md-start text-center">Group User Management</h5>
   <!-- <a href="{{ route('user.create') }}" class="align-right btn btn-pinned btn-primary">Add User</a> -->
  <div class="card-datatable text-nowrap">
                                     <table class="table table-bordered" id="groupusersdataTable" data-auto-responsive="false">

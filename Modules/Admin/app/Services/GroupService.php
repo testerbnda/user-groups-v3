@@ -80,8 +80,7 @@ class GroupService {
         }
     }
 
-    public function ajaxgetusers($id)
-    {
+    public function ajaxgetusers($id) {
         try {
             Logger::info($id);
             return $this->groupRepo->ajaxgetusers($id);
