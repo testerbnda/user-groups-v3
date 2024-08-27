@@ -42,7 +42,7 @@ Route::group(['prefix' => 'admin','name' => 'admin.', 'middleware' => ['auth']],
     Route::patch('sites/update/{id}', [SitesController::class, 'update'])->name('sites.update');
     Route::get('sites/ajaxgetsites', [SitesController::class, 'ajaxgetsites'])->name('sites.ajaxgetsites');
 
-    //Group Routes
+    // Group Routes
     Route::get('groups/list', [GroupsController::class, 'index'])->name('groups.list');
     Route::get('groups/create', [GroupsController::class, 'create'])->name('groups.create');
     Route::post('groups/store', [GroupsController::class, 'store'])->name('groups.store');
@@ -54,6 +54,7 @@ Route::group(['prefix' => 'admin','name' => 'admin.', 'middleware' => ['auth']],
     // Group Users
     Route::get('groups/{id}/users', [GroupsController::class, 'show'])->name('groups.users.list');
     Route::get('groups/{id}/ajaxgetusers', [GroupsController::class, 'ajaxgetusers']) -> name('groups.ajaxgetusers');
+
     // Route to search users
     Route::get('searchuser', [GroupsController::class, 'find'])->name('searchuser');
 

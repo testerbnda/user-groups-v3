@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\Admin\Http\Controllers;
+
 use Modules\Admin\Services\GroupService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,14 +14,16 @@ class GroupsController extends Controller
     private $groupService;
 
     // Constructor
-    public function __construct(GroupService $groupService) {
-        $this->groupService = $groupService;  
+    public function __construct(GroupService $groupService)
+    {
+        $this->groupService = $groupService;
     }
 
     /**
      * Display a listing of the resource.   
      */
-    public function index() {
+    public function index()
+    {
         return view('admin::groups.index');
     }
 
@@ -41,18 +44,31 @@ class GroupsController extends Controller
                 'name' => 'required|string|max:222',
                 'status' => 'required|integer|between:0,255',
                 'site_id' => 'required|exists:sites,id',
-                'user_ids' => 'nullable|string', 
+                'user_ids' => 'nullable|string',
             ]);
-    
+
             $userIds = $request->input('user_ids');
             $userIdsArray = !empty($userIds) ? explode(',', $userIds) : [];
-    
-            return $this->groupService->createGroup([
+
+            $group_created = $this->groupService->createGroup([
                 'name' => $data['name'],
                 'status' => $data['status'],
                 'site_id' => $data['site_id'],
                 'user_ids' => $userIdsArray,
             ]);
+            if($group_created) {
+                $notification = array(
+                    'message' => 'You have successfully created a group!',
+                    'alert-type' => 'success'
+                );
+            } else {
+                $notification = array(
+                    'message' => 'Can\'t create group, please try again!',
+                    'alert-type' => 'error'
+                );
+            }
+            return redirect()->route('groups.list') -> with($notification);
+
         } catch (\Exception $e) {
             Logger::error('Failed to create group: ' . $e->getMessage());
             throw $e;
@@ -62,45 +78,46 @@ class GroupsController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id) {
+    public function show($id)
+    {
         return view('admin::groups.show', ['id' => encrypt_decrypt('decrypt', $id)]);
     }
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id) {
-        $id = encrypt_decrypt('decrypt',$id);
-        $group = $this->groupService->firstornew($id); 
+    public function edit($id)
+    {
+        $id = encrypt_decrypt('decrypt', $id);
+        $group = $this->groupService->firstornew($id);
         $name = $group->name;
-        return view('admin::groups.edit',compact('group','name'));
+        return view('admin::groups.edit', compact('group', 'name'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(GroupUpdateService $request, $id) {
-        try{
-            $data = $request->only('name','status', 'user_ids');
+        try {
+            $data = $request->only('name', 'status', 'user_ids');
             $group = $this->groupService->firstornew($id);
             $user_ids = explode(",", $data['user_ids']);
-            if($data["user_ids"] == null) {
+            if ($data["user_ids"] == null) {
                 $user_ids = [];
             }
             $data['user_ids'] = $user_ids;
-            $result = $this->groupService->update($group,$data);
-            if($result){
+            $result = $this->groupService->update($group, $data);
+            if ($result) {
                 $notification = array(
-                'message' => 'You have successfully updated group!',
-                'alert-type' => 'success'
+                    'message' => 'You have successfully updated group!',
+                    'alert-type' => 'success'
                 );
                 return redirect()->route('groups.list')->with($notification);
             } else {
                 return redirect()->back()->withInput();
             }
-
-      } catch (\Exception $ex) {
-        Logger::error($request->getHttpHost().": Update site request failed with id=".$id.", Error=".$ex->getMessage());
-      }
+        } catch (\Exception $ex) {
+            Logger::error($request->getHttpHost() . ": Update site request failed with id=" . $id . ", Error=" . $ex->getMessage());
+        }
     }
 
     /**
@@ -108,25 +125,34 @@ class GroupsController extends Controller
      */
     public function destroy($id) {
         try {
-            $id = encrypt_decrypt('decrypt',$id);
+            $id = encrypt_decrypt('decrypt', $id);
             $group = $this->groupService->findFirst($id);
-            return $this->groupService->deleteGroup($id);
-        } catch(\Exception $ex) {
-            Logger::error("Error=".$ex->getMessage());
+            if ($group) {
+                $notification = array(
+                    'message' => 'You have successfully deleted group!',
+                    'alert-type' => 'success'
+                );
+            }
+            return $this->groupService->deleteGroup($id) -> with($notification);
+        } catch (\Exception $ex) {
+            Logger::error("Error=" . $ex->getMessage());
         }
     }
 
-    public function find(Request $request) {
+    public function find(Request $request)
+    {
         $query = $request->input('query');
-        if(strlen($query) < 1) return response() -> json(['users' => []]);
-        return $this -> groupService -> searchUser($query);
+        if (strlen($query) < 1) return response()->json(['users' => []]);
+        return $this->groupService->searchUser($query);
     }
 
-    public function ajaxgetgroups() {
+    public function ajaxgetgroups()
+    {
         return $this->groupService->ajaxgetlist();
     }
 
-    public function ajaxgetusers($id) { 
-        return $this->groupService->ajaxgetusers($id); 
+    public function ajaxgetusers($id)
+    {
+        return $this->groupService->ajaxgetusers($id);
     }
 }
