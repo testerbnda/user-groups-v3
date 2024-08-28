@@ -15,4 +15,22 @@ class RecievableService {
             throw $e;
         }
     }
+
+    public function ajaxgetrecievables() {
+        try {
+            return $this->recievableRepo->ajaxgetrecievables();
+        } catch (Exception $ex) {
+            Logger::error($ex);
+            return $ex;
+        }
+    }
+
+    public function index() {
+        try {
+            return $this -> recievableRepo -> index();
+        } catch(Exception $ex) {
+            Logger:error($ex);
+            return $ex;
+        }
+    }
 }

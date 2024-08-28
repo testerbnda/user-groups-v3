@@ -62,6 +62,7 @@ Route::group(['prefix' => 'admin','name' => 'admin.', 'middleware' => ['auth']],
     // Recievables Routes
     Route::get('recievables/list', [RecievableController::class, 'index'])->name('recievables.list');
     Route::get('recievables/ajaxgetrecievables', [RecievableController::class, 'ajaxgetrecievables'])->name('recievables.ajaxgetrecievables');    
+    
 
     // Cache Clear
     Route::get('/clear-cache',function(){

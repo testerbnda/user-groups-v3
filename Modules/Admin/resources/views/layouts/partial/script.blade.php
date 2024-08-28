@@ -305,7 +305,7 @@
           processing: true,
           serverSide: true,
           dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-          ajax: domainUrl + "",
+          ajax: domainUrl + "/admin/recievables/ajaxgetrecievables",
           language: {
               paginate: {
                   next: '<i class="bx bx-chevron-right bx-18px"></i>',

@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Total Balance</h5>
-                    <p class="card-text fs-3" id="totalBalance">0</p>
+                    <p class="card-text fs-3" id="totalBalance">{{ number_format($totalBalance, 2) }}</p>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Total Buckets</h5>
-                    <p class="card-text fs-3" id="totalBuckets">0</p>
+                    <p class="card-text fs-3" id="totalBuckets">{{ $bucketCount }}</p>
                 </div>
             </div>
         </div>

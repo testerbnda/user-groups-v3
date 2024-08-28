@@ -3,9 +3,8 @@
 namespace Modules\Admin\Http\Controllers;
 use Modules\Admin\Services\RecievableService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
+
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class RecievableController extends Controller
 {
@@ -21,7 +20,7 @@ class RecievableController extends Controller
      */
     public function index()
     {
-        return view('admin::recievables.index');
+        return $this -> recievableService -> index();
     }
 
     /**
@@ -35,7 +34,7 @@ class RecievableController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         //
     }
@@ -59,7 +58,7 @@ class RecievableController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, $id)
     {
         //
     }
@@ -70,5 +69,10 @@ class RecievableController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function ajaxgetrecievables()
+    {
+        return $this->recievableService->ajaxgetrecievables();
     }
 }

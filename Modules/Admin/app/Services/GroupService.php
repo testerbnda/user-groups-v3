@@ -82,7 +82,6 @@ class GroupService {
 
     public function ajaxgetusers($id) {
         try {
-            Logger::info($id);
             return $this->groupRepo->ajaxgetusers($id);
         } catch (Exception $ex) {
             Logger::error($ex);
