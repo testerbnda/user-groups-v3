@@ -262,4 +262,59 @@
           ]
       })
       
+
+
+      var tblcol5 = [
+          //   { 'name': 'created_at.timestamp', 'data': { '_': 'created_at.display', 'sort': 'created_at' }, sClass: 'text-center nk-tb-col' },
+          {
+              data: 'created_at',
+              name: 'created_at',
+              sClass: 'nk-tb-col'
+          },
+          {
+              data: 'name',
+              name: 'name',
+              searchable: true,
+              sClass: 'nk-tb-col'
+          },
+          {
+              data: 'vid_ac',
+              name: 'vid_ac',
+              searchable: true,
+              orderable: false,
+          },
+          {
+              data: 'balance',
+              name: 'balance',
+              searchable: false,
+              orderable: true,
+              sClass: 'nk-tb-col'
+
+          },
+          {
+              data: 'action',
+              name: 'action',
+              orderable: false,
+              serachable: false,
+              sClass: 'text-center nk-tb-col nk-tb-col-tools'
+          },
+          
+      ];
+
+      NioApp.DataTable("#recievablesdataTable", {
+          processing: true,
+          serverSide: true,
+          dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+          ajax: domainUrl + "",
+          language: {
+              paginate: {
+                  next: '<i class="bx bx-chevron-right bx-18px"></i>',
+                  previous: '<i class="bx bx-chevron-left bx-18px"></i>'
+              }
+          },
+          columns: tblcol5,
+          "order": [
+              [0, "desc"]
+          ]
+      })
   </script>

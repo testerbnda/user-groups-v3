@@ -33,6 +33,10 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
         $this->app->bind("Modules\Admin\Repositories\Interfaces\UserInterface", "Modules\Admin\Repositories\Implementations\UserRepository"); 
         $this->app->bind("Modules\Admin\Repositories\Interfaces\SitesInterface", "Modules\Admin\Repositories\Implementations\SitesRepository");
+        $this->app->bind("Modules\Admin\Repositories\Interfaces\GroupInterface", "Modules\Admin\Repositories\Implementations\GroupRepository");
+        $this->app->bind("Modules\Admin\Repositories\Interfaces\RecievableInterface", "Modules\Admin\Repositories\Implementations\RecievableRepository");
+
+
     }
 
     /**

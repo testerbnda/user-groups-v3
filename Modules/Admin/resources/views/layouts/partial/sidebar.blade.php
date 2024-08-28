@@ -56,7 +56,7 @@
 
             <li class="menu-item">
               <a
-                href="javascript:void(0);"
+                href="{{ route('recievables.list') }}"
                 class="menu-link">
                 <i class="menu-icon tf-icons bx bx-down-arrow-circle"></i>
                 <div class="text-truncate" data-i18n="Email">Receivables</div>

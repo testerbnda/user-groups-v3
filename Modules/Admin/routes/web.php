@@ -5,6 +5,7 @@ use Modules\Admin\Http\Controllers\AdminController;
 use Modules\Admin\Http\Controllers\UserController;
 use Modules\Admin\Http\Controllers\SitesController;
 use Modules\Admin\Http\Controllers\GroupsController;
+use Modules\Admin\Http\Controllers\RecievableController;
 
 
 /*
@@ -57,6 +58,10 @@ Route::group(['prefix' => 'admin','name' => 'admin.', 'middleware' => ['auth']],
 
     // Route to search users
     Route::get('searchuser', [GroupsController::class, 'find'])->name('searchuser');
+
+    // Recievables Routes
+    Route::get('recievables/list', [RecievableController::class, 'index'])->name('recievables.list');
+    Route::get('recievables/ajaxgetrecievables', [RecievableController::class, 'ajaxgetrecievables'])->name('recievables.ajaxgetrecievables');    
 
     // Cache Clear
     Route::get('/clear-cache',function(){

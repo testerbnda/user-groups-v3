@@ -12,7 +12,7 @@ class GroupService {
         try {
             $this -> groupRepo = $groupRepo;
         } catch (\Exception $e) {
-            Logger::error('Failed to create group: ' . $e->getMessage());
+            Logger::error('Failed to initialize: ' . $e->getMessage());
             throw $e;
         }
     }
