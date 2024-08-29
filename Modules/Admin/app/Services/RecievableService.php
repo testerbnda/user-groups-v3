@@ -29,7 +29,7 @@ class RecievableService {
         try {
             return $this -> recievableRepo -> index();
         } catch(Exception $ex) {
-            Logger:error($ex);
+            Logger::error($ex);
             return $ex;
         }
     }

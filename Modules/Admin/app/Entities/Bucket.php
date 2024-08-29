@@ -1,40 +1,39 @@
 <?php
-
 namespace Modules\Admin\Entities;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Bucket extends Model
 {
-    use HasFactory;
     // Table name
-    protected $table = 'bucket';
+    protected $table = 'buckets';
 
-    // Auto-incrementing primary key
+    // Primary Key
+    protected $primaryKey = 'id';
+
+    // Disable auto-incrementing since it's unsigned
     public $incrementing = true;
 
     // Timestamps
     public $timestamps = true;
 
-     /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
+    // Fillable fields
     protected $fillable = [
         'name',
-        'vid_ac',
-        'balance',
-        'created_at',
-        'updated_at',
+        'purpose',
+        'description',
+        'type',
     ];
 
-    // The attributes that should be cast to native types
+    // The attributes that should be cast to native types.
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
-    // Disable timestamps if necessary
-    // public $timestamps = false;
+    // Define the one-to-one relationship with VirtualAccount
+    public function virtualAccount()
+    {
+        return $this->hasOne(VirtualAccount::class, 'bucket_id');
+    }
 }
