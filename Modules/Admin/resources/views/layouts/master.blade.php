@@ -90,6 +90,7 @@
     textarea {
         resize:none;
     }
+    
 </style>
 
 <body>

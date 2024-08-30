@@ -51,4 +51,22 @@ class RecievableService {
             return $ex;
         }
     }
+
+    public function getBalance($id) {
+        try {
+            return $this -> recievableRepo -> getBalance($id);
+        } catch (Exception $ex) {
+            Logger::error($ex);
+            return $ex;
+        }
+    }
+
+    public function transferfunds($validated, $id) {
+        try {
+            return $this -> recievableRepo -> transferfunds($validated, $id);
+        } catch (Exception $ex) {
+            Logger:error($ex);
+            return $ex;
+        }
+    }
 }

@@ -66,7 +66,7 @@ class RecievableController extends Controller
      */
     public function show($id)
     {
-        return view('admin::show');
+        return $this -> recievableService -> getBalance($id);
     }
 
     /**
@@ -98,5 +98,13 @@ class RecievableController extends Controller
     public function ajaxgetrecievables()
     {
         return $this->recievableService->ajaxgetrecievables();
+    }
+
+    public function transferfunds(Request $request, $id) {
+        $validated = $request->validate([
+            'payoutBuckets' => 'required|array',
+            'payoutBuckets.*' => 'required|numeric|min:1',
+        ]);
+        return $this -> recievableService -> transferfunds($validated, $id);
     }
 }

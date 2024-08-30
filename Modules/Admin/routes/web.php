@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Mockery\ReceivedMethodCalls;
 use Modules\Admin\Http\Controllers\AdminController;
 use Modules\Admin\Http\Controllers\UserController;
 use Modules\Admin\Http\Controllers\SitesController;
@@ -64,8 +65,10 @@ Route::group(['prefix' => 'admin','name' => 'admin.', 'middleware' => ['auth']],
     Route::get('recievables/ajaxgetrecievables', [RecievableController::class, 'ajaxgetrecievables'])->name('recievables.ajaxgetrecievables');    
     Route::get('recievables/create', [RecievableController::class, 'create'])->name('recievables.create');
     Route::post('recievables/store', [RecievableController::class, 'store'])->name('recievables.store');
-    Route::get('recievables/edit/{id}', [RecievableController::class, 'edit'])->name('recievables.edit');
-    Route::post('recievables/update/{id}', [RecievableController::class, 'update'])->name('recievables.update');
+    Route::get('recievables/edit/{id}', [RecievableController::class, 'edit'])->name('recievables.edit'); // Incomplete
+    Route::post('recievables/update/{id}', [RecievableController::class, 'update'])->name('recievables.update'); // Incomplete
+    Route::get('recievables/show/{id}', [RecievableController::class, 'show'])->name('recievables.show');
+    Route::post('recievables/transferfunds/{id}', [RecievableController::class, 'transferfunds'])->name('recievables.transfer');
 
 
     // Cache Clear
