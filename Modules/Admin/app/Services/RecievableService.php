@@ -65,7 +65,16 @@ class RecievableService {
         try {
             return $this -> recievableRepo -> transferfunds($validated, $id);
         } catch (Exception $ex) {
-            Logger:error($ex);
+            Logger::error($ex);
+            return $ex;
+        }
+    }
+
+    public function ajaxgettransactions($id) {
+        try {
+            return $this -> recievableRepo -> ajaxgettransactions($id);
+        } catch (Exception $ex) {
+            Logger::error($ex);
             return $ex;
         }
     }

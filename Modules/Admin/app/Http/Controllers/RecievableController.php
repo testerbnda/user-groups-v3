@@ -107,4 +107,8 @@ class RecievableController extends Controller
         ]);
         return $this -> recievableService -> transferfunds($validated, $id);
     }
+
+    public function ajaxgettransactions($id) {
+        return $this -> recievableService -> ajaxgettransactions($id);
+    }
 }

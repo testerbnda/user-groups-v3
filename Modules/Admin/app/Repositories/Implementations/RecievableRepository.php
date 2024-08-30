@@ -144,7 +144,7 @@ class RecievableRepository implements RecievableInterface
         $bucket = Bucket::findOrFail($id);
         $balance = VirtualAccount::where('bucket_id', $id)->value('balance');
         $buckets = Bucket::where('id', '!=', $id)->where('type', 'payout')->get();
-        return view('admin::recievables.show', compact('bucket', 'buckets', 'balance'));
+        return view('admin::recievables.transactions', compact('id','bucket', 'buckets', 'balance'));
     }
 
     public function transferfunds($validated, $id)
@@ -200,6 +200,39 @@ class RecievableRepository implements RecievableInterface
             DB::rollBack();
             Logger::error('Transfer funds failed: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to transfer funds'], 500);
+        }
+    }
+
+    public function ajaxgettransactions(string $id)
+    {
+        if (request()->ajax()) {
+            $virtual_account_id = VirtualAccount::where("bucket_id", $id) -> value('account_no');
+            $data = VirtualTxn::
+                where('account_id', $virtual_account_id)
+                ->orderBy('virtual_txns.created_at', 'desc')
+                ->get();
+
+            return datatables()->of($data)
+                ->setRowClass(function ($request) {
+                    return 'nk-tb-item';
+                })
+                ->editColumn('created_at', function ($request) {
+                    return $request->created_at->format('d/m/Y H:i:s');
+                })
+                ->editColumn('fromaccount', function ($request) {
+                    return $request->account_id;
+                })
+                ->editColumn('toaccount', function ($request) {
+                    return $request->party_ac_id;
+                })
+                ->editColumn('amount', function ($request) {
+                    return $request->amount;
+                })
+                ->editColumn('type', function ($request) {
+                    return $request->type;
+                })
+                ->rawColumns(['created_at', 'fromaccount', 'toaccount', 'amount', 'type'])
+                ->make(true);
         }
     }
 }

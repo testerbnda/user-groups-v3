@@ -39,6 +39,7 @@
   <script type="text/javascript">
       var domainUrl = window.location.origin;
         var groupId = "{{ $id ?? '' }}"; 
+        var bucketId = "{{ $id ?? '' }}";
       var tblcol = [
           //   { 'name': 'created_at.timestamp', 'data': { '_': 'created_at.display', 'sort': 'created_at' }, sClass: 'text-center nk-tb-col' },
           {
@@ -66,14 +67,14 @@
               data: 'status',
               name: 'users.status',
               orderable: false,
-              serachable: false,
+              searchable: false,
               sClass: 'text-center nk-tb-col'
           },
           {
               data: 'action',
               name: 'action',
               orderable: false,
-              serachable: false,
+              searchable: false,
               sClass: 'text-center nk-tb-col nk-tb-col-tools'
           },
       ];
@@ -162,21 +163,21 @@
               data: 'name',
               name: 'name',
               orderable: true,
-              serachable: true,
+              searchable: true,
               sClass: 'nk-tb-col'
           },
           {
               data: 'users',
               name: 'users',
               orderable: true,
-              serachable: true,
+              searchable: true,
               sClass: 'text-center nk-tb-col nk-tb-col-users'
           },
           {
               data: 'status',
               name: 'status',
               orderable: false,
-              serachable: false,
+              searchable: false,
               sClass: 'text-center nk-tb-col'
           },
           
@@ -184,7 +185,7 @@
               data: 'action',
               name: 'action',
               orderable: false,
-              serachable: false,
+              searchable: false,
               sClass: 'text-center nk-tb-col nk-tb-col-tools'
           },
           
@@ -295,7 +296,7 @@
               data: 'action',
               name: 'action',
               orderable: false,
-              serachable: false,
+              searchable: false,
               sClass: 'text-center nk-tb-col nk-tb-col-tools'
           },
           
@@ -313,6 +314,63 @@
               }
           },
           columns: tblcol5,
+          "order": [
+              [0, "desc"]
+          ]
+      })
+      
+
+
+
+    var tblcol6 = [
+          //   { 'name': 'created_at.timestamp', 'data': { '_': 'created_at.display', 'sort': 'created_at' }, sClass: 'text-center nk-tb-col' },
+          {
+              data: 'created_at',
+              name: 'created_at',
+              sClass: 'nk-tb-col'
+          },
+          {
+              data: 'fromaccount',
+              name: 'fromaccount',
+              searchable: true,
+              orderable: false,
+              sClass: 'nk-tb-col'
+          },
+          {
+              data: 'toaccount',
+              name: 'toaccount',
+              searchable: true,
+              orderable: false,
+          },
+          {
+              data: 'amount',
+              name: 'amount',
+              searchable: true,
+              orderable: true,
+              sClass: 'nk-tb-col'
+
+          },
+          {
+              data: 'type',
+              name: 'type',
+              orderable: false,
+              searchable: true,
+              sClass: 'text-center nk-tb-col nk-tb-col-tools'
+          },
+      ];
+
+      NioApp.DataTable("#transactionsdataTable", {
+          processing: true,
+          serverSide: true,
+          dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end mt-n6 mt-md-0"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+          ajax: domainUrl + "/admin/recievables/" + bucketId + "/ajaxgettransactions",
+          language: {
+              paginate: {
+                  next: '<i class="bx bx-chevron-right bx-18px"></i>',
+                  previous: '<i class="bx bx-chevron-left bx-18px"></i>'
+              }
+          },
+          columns: tblcol6,
           "order": [
               [0, "desc"]
           ]

@@ -9,5 +9,6 @@ interface RecievableInterface {
     public function createBucket(Bucket $bucket);
     public function edit(string $id);
     public function getBalance(string $id);
-    public function transferFunds($data, $id);
+    public function transferFunds($data, string $id);
+    public function ajaxgettransactions(string $id);
 }

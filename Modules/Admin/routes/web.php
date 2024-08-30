@@ -69,7 +69,7 @@ Route::group(['prefix' => 'admin','name' => 'admin.', 'middleware' => ['auth']],
     Route::post('recievables/update/{id}', [RecievableController::class, 'update'])->name('recievables.update'); // Incomplete
     Route::get('recievables/show/{id}', [RecievableController::class, 'show'])->name('recievables.show');
     Route::post('recievables/transferfunds/{id}', [RecievableController::class, 'transferfunds'])->name('recievables.transfer');
-
+    Route::get('recievables/{id}/ajaxgettransactions', [RecievableController::class, 'ajaxgettransactions']) -> name('recievables.ajaxgettransactions');
 
     // Cache Clear
     Route::get('/clear-cache',function(){
