@@ -17,7 +17,7 @@ use Modules\Deal\Entities\SubDealTypeFieldMapping;
 
 //use Amqp;
 //use DB;
-//use Auth;
+// use Auth;
 
 if (!function_exists('jsonResponse')) {
     /**

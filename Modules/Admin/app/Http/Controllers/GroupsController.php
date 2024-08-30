@@ -73,6 +73,7 @@ class GroupsController extends Controller
             Logger::error('Failed to create group: ' . $e->getMessage());
             throw $e;
         }
+    
     }
 
     /**

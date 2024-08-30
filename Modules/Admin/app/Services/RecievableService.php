@@ -33,4 +33,22 @@ class RecievableService {
             return $ex;
         }
     }
+
+    public function createBucket($data) {
+        try {
+            return $this -> recievableRepo -> createBucket($data);
+        } catch (Exception $ex) {
+            Logger::error($ex);
+            return $ex;
+        }
+    }
+    
+    public function edit($id) {
+        try {
+            return $this -> recievableRepo -> edit($id);
+        } catch(Exception $ex) {
+            Logger::error($ex);
+            return $ex;
+        }
+    }
 }

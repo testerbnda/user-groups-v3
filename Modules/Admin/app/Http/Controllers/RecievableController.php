@@ -3,9 +3,10 @@
 namespace Modules\Admin\Http\Controllers;
 use Modules\Admin\Services\RecievableService;
 use App\Http\Controllers\Controller;
-
+use Modules\Admin\Http\Requests\RecievableUpdateService;
 use Illuminate\Http\Request;
-
+use Modules\Core\Helpers\Logger;    
+use Auth;
 class RecievableController extends Controller
 {
     private $recievableService;
@@ -26,17 +27,38 @@ class RecievableController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view('admin::create');
+    public function create() {
+        return view('admin::recievables.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        try {
+            $data = $request->validate([
+                'name' => 'required|string|max:45',
+                'purpose' => 'required|string|max:1000',
+                'description' => 'required|string',  // Adjust if you need to limit the size of the description
+            ]);
+            $data['type'] = 'payin';
+            $createdBucket = $this -> recievableService -> createBucket($data);
+            if($createdBucket) {
+                $notification = array(
+                    'message' => 'You have successfully created a bucket!',
+                    'alert-type' => 'success'
+                );
+            } else {
+                $notification = array(
+                    'message' => 'Can\'t create bucket, please try again!',
+                    'alert-type' => 'error'
+                );
+            }
+            return redirect()->route('recievables.list') -> with($notification);
+        } catch(\Exception $ex) {
+            Logger::error($ex);
+            throw $ex;
+        }
     }
 
     /**
@@ -52,15 +74,17 @@ class RecievableController extends Controller
      */
     public function edit($id)
     {
-        return view('admin::edit');
+
+        return $this -> recievableService -> edit($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(RecievableUpdateService $request, $id)
     {
-        //
+        Logger::info(json_encode(["ID" => $id, "data" => $request]));
+        return $id;   
     }
 
     /**

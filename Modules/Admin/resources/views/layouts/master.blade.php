@@ -87,6 +87,9 @@
         border-color: #F47E20;
         box-shadow: 0 0.125rem 0.25rem 0 rgba(133, 146, 163, 0.4);
     }
+    textarea {
+        resize:none;
+    }
 </style>
 
 <body>
