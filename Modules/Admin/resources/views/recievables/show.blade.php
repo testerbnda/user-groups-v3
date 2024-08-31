@@ -5,7 +5,7 @@
     <!-- Page Header -->
     <div class="row mb-4">
         <div class="col-md-12">
-            <h1 class="mb-3">Bucket Transfer Dashboard</h1>
+            <h1 class="mb-3">Transfer Funds</h1>
         </div>
     </div>
 

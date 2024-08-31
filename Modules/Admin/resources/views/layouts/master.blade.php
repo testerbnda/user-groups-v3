@@ -87,10 +87,77 @@
         border-color: #F47E20;
         box-shadow: 0 0.125rem 0.25rem 0 rgba(133, 146, 163, 0.4);
     }
+
     textarea {
-        resize:none;
+        resize: none;
     }
-    
+
+    .custom-select {
+    width: 100%;
+    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 10px solid #ced4da;
+    border-radius: 0.25rem;
+    appearance: none;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
+
+.remove-bucket, .add-bucket {
+    height: 35px;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+
+.modal-body {
+    padding: 1.5rem 2rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.custom-select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out;
+}
+
+.bucket-entry {
+    margin-bottom: 1rem;
+}
+
+#selectedBuckets .row {
+    margin-bottom: 0.75rem;
+}
+
+
+#selectedBuckets .form-control {
+    margin-top: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+#transferFundsForm .btn-success {
+    padding: 0.5rem 1.5rem;
+}
+
 </style>
 
 <body>
